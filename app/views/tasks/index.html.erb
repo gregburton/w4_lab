@@ -1,24 +1,26 @@
-<h1 class="page_title"><%= @list ? @list.title : "All Tasks" %></h1>
 
-<table>
-  <% @tasks.each do |task| %>
-    <% unless task.complete? %>
-    <tr>
-    <% if @list %>
-      <td> <%= link_to complete_list_task_path(task.list_id, task.id), method: :patch do %>
-            <i class="icon-check-mark-2"></i><% end %>
-            </td>
-    <% else %>
-      <td> <%= link_to complete_list_task_path(List.all, task.id), method: :patch do %>
-            <i class="icon-check-mark-2"></i><% end %>
-            </td>
+    <h1 class="page_title"><%= @list ? @list.title : "All Tasks" %></h1>
+    <table>
+    <% @tasks.each do |task| %>
+      <% unless task.complete? %>
+        <tr>
+        <% if @list %>
+          <td> <%= link_to complete_list_task_path(task.list_id, task.id), method: :patch do %>
+               <i class="icon-check-mark-2"></i><% end %>
+          </td>
+        <% else %>
+          <td> <%= link_to complete_list_task_path(task.list_id, task.id), method: :patch do %>
+               <i class="icon-check-mark-2"></i><% end %>
+          </td>
+        <% end %>
+          <td> <%= link_to "#{task.title}", list_task_path(task.list_id, task.id) %> </td>
+          <td> <%= task.due_date %></td>
+        </tr>
+      <% end %>
     <% end %>
-    <td> <%= link_to "#{task.title}", list_task_path(task.list_id, task.id) %> </td>
-    <td> <%= task.due_date %></td>
-    </tr>
-    <% end %>
-  <% end %>
-</table>
+    </table>
+
+
 <br>
 
 <% if @list %>
@@ -29,17 +31,6 @@
           </div>
         </div>
   <% end %>
-<% else %>
-  <h1>Completed Tasks</h1>
-  <table>
-    <% @tasks.each do |task| %>
-      <% if task.complete? %>
-        <tr>
-          <td> <%= task.title %> </td>
-        </tr>
-      <% end %>
-    <% end %>
-  </table>
 <% end %>
 <br>
 
